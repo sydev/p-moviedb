@@ -1,0 +1,18 @@
+{
+  "name": "p-moviedb",
+  "version": "0.0.1",
+  "main": "lib/index.js",
+  "license": "MIT",
+  "dependencies": {
+    "is-plain-object": "^2.0.4",
+    "params-url": "^1.1.5",
+    "r2": "^2.0.0"
+  },
+  "scripts": {
+    "test": "ava --verbose"
+  },
+  "devDependencies": {
+    "ava": "^0.24.0",
+    "franc-min": "^3.1.1"
+  }
+}
