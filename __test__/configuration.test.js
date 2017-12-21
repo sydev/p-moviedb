@@ -3,7 +3,7 @@ import isObject from 'is-plain-object';
 
 import MovieDB from '../index';
 
-const {api_key} = require('./config.json');
+const api_key = process.env.API_KEY;
 
 
 const configKeys = ['images', 'change_keys'].sort();

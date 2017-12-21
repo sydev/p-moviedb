@@ -3,7 +3,7 @@ import franc from 'franc-min';
 
 import MovieDB from '../index';
 
-const {api_key} = require('./config.json');
+const api_key   = process.env.API_KEY;
 const _conf     = require('./data/configuration.json');
 const showKeys  = ['original_name', 'genre_ids', 'name', 'popularity', 'origin_country', 'vote_count', 'first_air_date', 'backdrop_path', 'original_language', 'id', 'vote_average', 'overview', 'poster_path', 'backdrop_urls', 'poster_urls'].sort();
 
