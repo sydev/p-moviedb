@@ -9,10 +9,13 @@
     "r2": "^2.0.0"
   },
   "scripts": {
-    "test": "ava"
+    "test": "ava",
+    "generate-docs": "./node_modules/.bin/jsdoc -c jsdoc.json"
   },
   "devDependencies": {
     "ava": "^0.24.0",
-    "franc-min": "^3.1.1"
+    "docdash": "^0.4.0",
+    "franc-min": "^3.1.1",
+    "jsdoc": "^3.5.5"
   }
 }
