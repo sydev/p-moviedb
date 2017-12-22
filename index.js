@@ -10,7 +10,7 @@
 
 
   /**
-   * @type {Object} Options
+   * @type {Options}
    * @prop {String} api_key The API key for https://www.themoviedb.org/
    * @prop {String} [language='en'] An ISO-639-1 or ISO-3166-1 language code. Example: "en-US" or "en"
    */
@@ -24,7 +24,7 @@
   };
 
   /**
-   * @type {Object} ErrorResponse
+   * @type {ErrorResponse}
    * @prop {Number} status_code The error code
    * @prop {String} status_message The error message
    * @prop {Boolean} success 
@@ -182,6 +182,33 @@
 
       try {
         const url  = paramsUrl.generate(`${baseUrl}/search/movie`, options);
+        const conf = await this.getConfiguration();
+        const res  = await request(url);
+
+        if (res.results) return parseItems(res.results, conf);
+        else throw new Error(res.status_message);
+      } catch (err) {
+        throw err;
+      }
+    }
+
+
+    /**
+     * Search for tv shows.
+     * 
+     * @param {Object} options 
+     * @returns {Promise<Response|ErrorResponse>}
+     * 
+     * @memberOf MovieDB
+     */
+    async searchTv(options) {
+      if (!isObject(options)) throw new Error('`options` must be an object.');
+      else if (!options.query) throw new Error('`options.query` is required.');
+
+      options = Object.assign({}, this.options, options);
+
+      try {
+        const url  = paramsUrl.generate(`${baseUrl}/search/tv`, options);
         const conf = await this.getConfiguration();
         const res  = await request(url);
 
