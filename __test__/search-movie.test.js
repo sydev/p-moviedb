@@ -4,7 +4,24 @@ import MovieDB from '../index';
 
 const api_key   = process.env.API_KEY;
 const _conf     = require('./data/configuration.json');
-const movieKeys = ['vote_count', 'id', 'video', 'vote_average', 'title', 'popularity', 'poster_path', 'original_language', 'original_title', 'genre_ids', 'backdrop_path', 'adult', 'overview', 'release_date', 'backdrop_urls', 'poster_urls'].sort();
+const movieKeys = [
+  'vote_count', 
+  'id', 
+  'video', 
+  'vote_average', 
+  'title', 
+  'popularity', 
+  'poster_path', 
+  'original_language', 
+  'original_title', 
+  'genre_ids', 
+  'backdrop_path', 
+  'adult', 
+  'overview', 
+  'release_date', 
+  'backdrop_urls', 
+  'poster_urls'
+].sort();
 
 
 test('Search movie with query `The Avengers`', async t => {

@@ -2,8 +2,10 @@
   'use strict';
 
   const isObject  = require('is-plain-object');
-  const paramsUrl = require('params-url');
+  //const paramsUrl = require('params-url');
+  const qs = require('query-string');
 
+  const parseItem   = require('./lib/parse-item');
   const parseItems  = require('./lib/parse-items');
   const request     = require('./lib/request');
   const {baseUrl}   = require('./constants');
@@ -85,7 +87,7 @@
       if (this._configuration) return this._configuration;
 
       try {
-        const url = paramsUrl.generate(`${baseUrl}/configuration`, this.options);
+        const url = `${baseUrl}/configuration?${qs.stringify(this.options)}`;
         const res = await request(url);
 
         if (!res.status_code) {
@@ -128,7 +130,7 @@
       options = Object.assign({}, this.options, options);
 
       try {
-        const url  = paramsUrl.generate(`${baseUrl}/discover/movie`, options);
+        const url  = `${baseUrl}/discover/movie?${qs.stringify(options)}`;
         const conf = await this.getConfiguration();
         const res  = await request(url);
 
@@ -153,7 +155,7 @@
       options = Object.assign({}, this.options, options);
 
       try {
-        const url  = paramsUrl.generate(`${baseUrl}/discover/tv`, options);
+        const url  = `${baseUrl}/discover/tv?${qs.stringify(options)}`;
         const conf = await this.getConfiguration();
         const res  = await request(url);
 
@@ -181,7 +183,7 @@
       options = Object.assign({}, this.options, options);
 
       try {
-        const url  = paramsUrl.generate(`${baseUrl}/search/movie`, options);
+        const url  = `${baseUrl}/search/movie?${qs.stringify(options)}`;
         const conf = await this.getConfiguration();
         const res  = await request(url);
 
@@ -208,11 +210,43 @@
       options = Object.assign({}, this.options, options);
 
       try {
-        const url  = paramsUrl.generate(`${baseUrl}/search/tv`, options);
+        const url  = `${baseUrl}/search/tv?${qs.stringify(options)}`;
         const conf = await this.getConfiguration();
         const res  = await request(url);
 
         if (res.results) return parseItems(res.results, conf);
+        else throw new Error(res.status_message);
+      } catch (err) {
+        throw err;
+      }
+    }
+
+
+
+
+    /*** MOVIE ***/
+
+    /**
+     * Get the details for a movie by its id.
+     * 
+     * @param {Object} options 
+     * @returns {Promise<Response|ErrorResponse>}
+     * 
+     * @memberOf MovieDB
+     */
+    async getMovie(options) {
+      if (!isObject(options)) throw new Error('`options` must be an object.');
+      else if (typeof options.id === 'undefined' || options.id === null) throw new Error('`options.id` is required.');
+      else if (!Number.isInteger(options.id) || options.id <= 0) throw new Error('`options.id` must be an integer greater than 0.');
+
+      options = Object.assign({}, this.options, options);
+
+      try {
+        const url  = `${baseUrl}/movie/${options.id}?${qs.stringify(options)}`;
+        const conf = await this.getConfiguration();
+        const res  = await request(url);
+
+        if (!res.status_code) return parseItem(res, conf);
         else throw new Error(res.status_message);
       } catch (err) {
         throw err;
