@@ -2,8 +2,7 @@
   'use strict';
 
   const isObject  = require('is-plain-object');
-  //const paramsUrl = require('params-url');
-  const qs = require('query-string');
+  const qs        = require('query-string');
 
   const parseItem   = require('./lib/parse-item');
   const parseItems  = require('./lib/parse-items');
@@ -87,8 +86,8 @@
       if (this._configuration) return this._configuration;
 
       try {
-        const url = `${baseUrl}/configuration?${qs.stringify(this.options)}`;
-        const res = await request(url);
+        const url = `${baseUrl}/configuration`;
+        const res = await request(url, this.options);
 
         if (!res.status_code) {
           this._configuration = res;
@@ -130,9 +129,9 @@
       options = Object.assign({}, this.options, options);
 
       try {
-        const url  = `${baseUrl}/discover/movie?${qs.stringify(options)}`;
+        const url  = `${baseUrl}/discover/movie`;
         const conf = await this.getConfiguration();
-        const res  = await request(url);
+        const res  = await request(url, options);
 
         if (res.results) return parseItems(res.results, conf);
         else throw new Error(res.status_message);
@@ -155,9 +154,9 @@
       options = Object.assign({}, this.options, options);
 
       try {
-        const url  = `${baseUrl}/discover/tv?${qs.stringify(options)}`;
+        const url  = `${baseUrl}/discover/tv`;
         const conf = await this.getConfiguration();
-        const res  = await request(url);
+        const res  = await request(url, options);
 
         if (res.results) return parseItems(res.results, conf);
         else throw new Error(res.status_message);
@@ -183,9 +182,9 @@
       options = Object.assign({}, this.options, options);
 
       try {
-        const url  = `${baseUrl}/search/movie?${qs.stringify(options)}`;
+        const url  = `${baseUrl}/search/movie`;
         const conf = await this.getConfiguration();
-        const res  = await request(url);
+        const res  = await request(url, options);
 
         if (res.results) return parseItems(res.results, conf);
         else throw new Error(res.status_message);
@@ -210,9 +209,9 @@
       options = Object.assign({}, this.options, options);
 
       try {
-        const url  = `${baseUrl}/search/tv?${qs.stringify(options)}`;
+        const url  = `${baseUrl}/search/tv`;
         const conf = await this.getConfiguration();
-        const res  = await request(url);
+        const res  = await request(url, options);
 
         if (res.results) return parseItems(res.results, conf);
         else throw new Error(res.status_message);
@@ -242,9 +241,9 @@
       options = Object.assign({}, this.options, options);
 
       try {
-        const url  = `${baseUrl}/movie/${options.id}?${qs.stringify(options)}`;
+        const url  = `${baseUrl}/movie/${options.id}`;
         const conf = await this.getConfiguration();
-        const res  = await request(url);
+        const res  = await request(url, options);
 
         if (!res.status_code) return parseItem(res, conf);
         else throw new Error(res.status_message);

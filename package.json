@@ -9,7 +9,7 @@
     "r2": "^2.0.0"
   },
   "scripts": {
-    "test": "API_KEY=$(cat .api_key) ava",
+    "test": "ava",
     "generate-docs": "./node_modules/.bin/jsdoc -c jsdoc.json"
   },
   "devDependencies": {
